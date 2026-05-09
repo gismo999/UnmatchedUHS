@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UHS Interactive Handbook</title>
+    <style>
+        /* Modern, App-like CSS */
+        :root {
+            --primary: #005eb8; /* Medical Blue */
+            --secondary: #009639; /* Ambulance Green */
+            --danger: #d52b1e; /* Emergency Red */
+            --bg: #f4f7f6;
+            --text: #333;
+            --card-bg: #fff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 70px; /* Space for bottom nav */
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0; font-size: 1.5rem; }
+        h2 { border-bottom: 2px solid var(--primary); padding-bottom: 5px; color: var(--primary); }
+        h3 { color: var(--secondary); }
+
+        .container {
+            padding: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Card Style */
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th { background-color: var(--secondary); color: white; }
+        tr:hover { background-color: #f1f1f1; }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        .nav-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 15px 0;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            border-top: 3px solid transparent;
+        }
+        .nav-btn.active {
+            color: var(--primary);
+            border-top: 3px solid var(--primary);
+        }
+
+        /* Tab Content */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Search input */
+        #medSearch {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .alert {
+            background-color: #ffebee;
+            border-left: 5px solid var(--danger);
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>UHS Pocket Handbook</h1>
+    </header>
+
+    <nav class="nav-bar">
+        <button class="nav-btn active" onclick="openTab('protocols')">Protocols</button>
+        <button class="nav-btn" onclick="openTab('emergencies')">Emergencies</button>
+        <button class="nav-btn" onclick="openTab('meds')">Medications</button>
+        <button class="nav-btn" onclick="openTab('driving')">Driving</button>
+    </nav>
+
+    <div class="container">
+        
+        <div id="protocols" class="tab-content active">
+            <div class="card">
+                <h2>UHS Hospital Lockdown Policy</h2>
+                <div class="alert">
+                    <strong>Authority:</strong> A hospital lockdown may only be initiated by the Police Department (PD)[cite: 415]. No member of UHS staff has the authority to order, initiate, or grant permission for a hospital lockdown under any circumstances[cite: 414].
+                </div>
+                <p>If the Police Department initiates a lockdown, the date and time of the decision must be formally documented and immediately reported to GOLD COMMAND[cite: 416]. A hospital lockdown will only be enacted when GOLD COMMAND representatives from both UHS and the Police Department jointly determine that a lockdown is the most appropriate course of action[cite: 418].</p>
+                <p><strong>Patient Care:</strong> In the event of a hospital lockdown, triage tents must be established without delay[cite: 421]. Members of the public requiring medical attention are to be assessed and treated within the triage tents, ensuring continuity of care while maintaining safety[cite: 422].</p>
+            </div>
+
+            <div class="card">
+                <h2>State Codes</h2>
+                <div class="table-responsive">
+                    <table>
+                        <tr><th>Code</th><th>Meaning</th></tr>
+                        <tr><td>State 0</td><td>Urgent assistance [cite: 641]</td></tr>
+                        <tr><td>State 1</td><td>On duty [cite: 641]</td></tr>
+                        <tr><td>State 2</td><td>On patrol [cite: 641]</td></tr>
+                        <tr><td>State 3</td><td>At hospital (Available) [cite: 641]</td></tr>
+                        <tr><td>State 4</td><td>Taking a break [cite: 641]</td></tr>
+                        <tr><td>State 5</td><td>En-route to incident [cite: 641]</td></tr>
+                        <tr><td>State 6</td><td>On Scene [cite: 641]</td></tr>
+                        <tr><td>State 7</td><td>Committed/Busy (Can divert) [cite: 641]</td></tr>
+                        <tr><td>State 8</td><td>Committed/Busy (Not deployable) [cite: 641]</td></tr>
+                        <tr><td>State 9</td><td>Patient transport [cite: 641]</td></tr>
+                        <tr><td>State 10</td><td>Gov situation [cite: 641]</td></tr>
+                        <tr><td>State 11</td><td>Off duty [cite: 641]</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="emergencies" class="tab-content">
+            <div class="card">
+                <h2>Common Medical Emergencies</h2>
+                
+                <h3>Heart Attack (MI)</h3>
+                <p><strong>Signs:</strong> chest pain, sweating, nausea, left arm pain[cite: 674].</p>
+                <ul>
+                    <li>300mg aspirin [cite: 675]</li>
+                    <li>GTN if BP safe [cite: 676]</li>
+                    <li>Oxygen if sats low [cite: 677]</li>
+                    <li>Priority transport [cite: 678]</li>
+                </ul>
+
+                <h3>Anaphylaxis</h3>
+                <p><strong>Signs:</strong> swelling, wheeze, rash, low BP[cite: 681].</p>
+                <ul>
+                    <li>IM adrenaline (0.5mg) [cite: 682]</li>
+                    <li>High-flow oxygen [cite: 683]</li>
+                    <li>Fast transport [cite: 684]</li>
+                </ul>
+
+                <h3>Asthma Attack</h3>
+                <p><strong>Signs:</strong> wheeze, short of breath, speaking in short sentences[cite: 687].</p>
+                <ul>
+                    <li>Salbutamol (nebuliser/MDI) [cite: 688]</li>
+                    <li>Oxygen [cite: 689]</li>
+                    <li>Urgent transport if not improving [cite: 691]</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Observation Ranges</h2>
+                <div class="table-responsive">
+                    <table>
+                        <tr><th>Vital</th><th>Normal Range</th></tr>
+                        <tr><td>Heart Rate</td><td>60-100 BPM [cite: 665]</td></tr>
+                        <tr><td>Respiratory Rate</td><td>12-20 [cite: 668]</td></tr>
+                        <tr><td>Blood Pressure</td><td>120/80 mmHg [cite: 663]</td></tr>
+                        <tr><td>Oxygen (SpO2)</td><td>95-100% [cite: 664]</td></tr>
+                        <tr><td>Blood Glucose</td><td>4-8 mmol/L [cite: 662]</td></tr>
+                        <tr><td>Temperature</td><td>36.5°C [cite: 666]</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="meds" class="tab-content">
+            <div class="card">
+                <h2>Medication Reference</h2>
+                <input type="text" id="medSearch" onkeyup="searchMeds()" placeholder="Search medications or indications...">
+                <div class="table-responsive">
+                    <table id="medTable">
+                        <tr><th>Medication</th><th>Indication</th><th>Strength</th></tr>
+                        <tr><td>Oxygen</td><td>cardiac arrest, major trauma sepsis shock and breathing difficulties [cite: 643]</td><td>GAS [cite: 643]</td></tr>
+                        <tr><td>Aspirin</td><td>suspected heart attack / acs [cite: 643]</td><td>300mg [cite: 643]</td></tr>
+                        <tr><td>Adrenaline</td><td>cardiac arrest [cite: 643]</td><td>1mg/10ml [cite: 643]</td></tr>
+                        <tr><td>Naloxone IM</td><td>drug overdose [cite: 643]</td><td>400micrograms/1ml [cite: 643]</td></tr>
+                        <tr><td>Glucose</td><td>hypoglycemia low blood sugar [cite: 643]</td><td>50g/500ml [cite: 643]</td></tr>
+                        <tr><td>Morphine sulfate</td><td>moderate pain relief [cite: 643]</td><td>10mg/1ml [cite: 643]</td></tr>
+                        <tr><td>GTN</td><td>cardiac chest pain, angina [cite: 643]</td><td>400 micrograms/spray [cite: 643]</td></tr>
+                        <tr><td>TXA</td><td>major trauma, blood control [cite: 652]</td><td>100mg/1ml [cite: 652]</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="driving" class="tab-content">
+            <div class="card">
+                <h2>Emergency Driving & Exemptions</h2>
+                <p>Blue-light response should only be used for immediately life-threatening emergencies, urgent inter-facility transfers, major incidents, and operations requiring rapid deployment [cite: 533-537].</p>
+                
+                <h3>Exemptions Under Emergency Conditions:</h3>
+                <ul>
+                    <li>Exceeding Speed Limits [cite: 804]</li>
+                    <li>Travelling on the wrong side of the road [cite: 804]</li>
+                    <li>Treating RED lights as give way [cite: 804]</li>
+                    <li>Using audible warning systems at night [cite: 804]</li>
+                    <li>Stopping on a motorway [cite: 804]</li>
+                </ul>
+
+                <h3>Speed Limits on Response</h3>
+                <div class="alert">
+                    Driving at a speed exceeding 20 mph above the speed limit is not recommended[cite: 800]. Breaching this limit may result in lack of support from LAS command and could lead to the revocation of your CERAD certification[cite: 800].
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Tab switching logic
+        function openTab(tabName) {
+            // Hide all tabs
+            var i, tabcontent, navbtns;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            // Remove active class from buttons
+            navbtns = document.getElementsByClassName("nav-btn");
+            for (i = 0; i < navbtns.length; i++) {
+                navbtns[i].classList.remove("active");
+            }
+            
+            // Show current tab and add active class to clicked button
+            document.getElementById(tabName).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
+
+        // Medication Search filter
+        function searchMeds() {
+            var input, filter, table, tr, td, i, j, txtValue;
+            input = document.getElementById("medSearch");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("medTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "none"; // Hide row by default
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = ""; // Show row if match found
+                            break; 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
