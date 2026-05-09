@@ -72,13 +72,13 @@
         }
 
         .accordion::after {
-            content: '\002B'; /* Plus sign */
+            content: '\002B';
             font-size: 1.5rem;
             font-weight: bold;
         }
 
         .accordion.active-acc::after {
-            content: "\2212"; /* Minus sign */
+            content: "\2212";
         }
 
         .panel {
@@ -99,6 +99,9 @@
         th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
         th { background-color: var(--secondary); color: white; }
         tr:hover { background-color: #f1f1f1; }
+
+        /* Grade specific headers inside tables */
+        .grade-header th { background-color: #333; }
 
         /* Navigation */
         .nav-bar {
@@ -153,6 +156,11 @@
             border-radius: 5px;
             font-size: 1rem;
             box-sizing: border-box;
+            position: sticky;
+            top: 60px;
+            z-index: 90;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         
         ul { margin-top: 5px; padding-left: 20px; }
@@ -175,9 +183,7 @@
     <div class="container">
 
         <div id="policies" class="tab-content active">
-            
             <h2>Operational Standard v2.0</h2>
-
             <button class="accordion">1. Purpose & 2. Scope</button>
             <div class="panel"><div class="panel-inner">
                 <p><strong>Purpose:</strong> Outlines operational standards, professional expectations, and clinical procedures for all staff working within the UHS Ambulance and Hospital Service to ensure safe, effective, and professional care.</p>
@@ -287,7 +293,6 @@
                 <h3>Treating Animations</h3>
                 <p><strong>Standing (Bed/Window):</strong> Use <code>/e mechanic</code></p>
                 <p><strong>Floor Level (Overturned Car/Ground):</strong> Use <code>/e mechanic 4</code></p>
-                
                 <h3>Uniform Configurations</h3>
                 <ul>
                     <li><strong>Bag:</strong> Item 119 (Unisex)</li>
@@ -389,27 +394,99 @@
             <div class="panel"><div class="panel-inner">
                 <h3>AVPU (Consciousness)</h3>
                 <p><strong>A:</strong> Alert | <strong>V:</strong> Responds to Voice | <strong>P:</strong> Responds to Pain | <strong>U:</strong> Unresponsive</p>
-                
                 <h3>SAMPLE (History)</h3>
                 <p>Signs/Symptoms, Allergies, Medications, Past Medical Hx, Last Oral Intake, Events leading up.</p>
-
                 <h3>OPQRST (Pain)</h3>
                 <p>Onset, Provoking factors, Quality, Region & Radiation, Severity (0-10), Time.</p>
-
                 <h3>BEFAST (Stroke)</h3>
                 <p>Balance, Eyes, Face, Arms, Speech, Time.</p>
-
                 <h3>ATMIST (Handover)</h3>
                 <p>Age, Time, Mechanism of Injury, Injuries, Signs (Vitals), Treatment administered.</p>
             </div></div>
         </div>
 
         <div id="meds" class="tab-content">
-            <button class="accordion">Disease Outbreak Treatments</button>
+            <input type="text" id="medSearch" onkeyup="searchMeds()" placeholder="🔍 Search any medication or symptom...">
+            
+            <div class="alert" style="margin-top: 0;">
+                Staff may administer medications listed under their current grade, <strong>as well as all medications from the grades below them.</strong>
+            </div>
+
+            <button class="accordion med-accordion">Student Paramedic</button>
             <div class="panel"><div class="panel-inner">
                 <div class="table-responsive">
-                    <table>
-                        <tr><th>Disease</th><th>Symptoms</th><th>Approved Meds</th></tr>
+                    <table class="medTable">
+                        <tr class="grade-header"><th>Medication</th><th>Indication</th><th>Form/Dose</th></tr>
+                        <tr><td>Oxygen</td><td>Cardiac arrest, trauma, sepsis, shock</td><td>Gas</td></tr>
+                        <tr><td>Aspirin</td><td>Suspected MI / ACS</td><td>300mg</td></tr>
+                        <tr><td>Paracetamol</td><td>Mild/moderate pain, fever</td><td>1g (1000mg)</td></tr>
+                        <tr><td>Ibuprofen</td><td>Mild/moderate pain, inflammation</td><td>400mg</td></tr>
+                        <tr><td>Glucose (Oral)</td><td>Hypoglycemia (conscious patient)</td><td>Oral Gel / Tablet</td></tr>
+                    </table>
+                </div>
+            </div></div>
+
+            <button class="accordion med-accordion">Technician / ECA</button>
+            <div class="panel"><div class="panel-inner">
+                <div class="table-responsive">
+                    <table class="medTable">
+                        <tr class="grade-header"><th>Medication</th><th>Indication</th><th>Form/Dose</th></tr>
+                        <tr><td>GTN</td><td>Cardiac chest pain, angina</td><td>400mcg/spray</td></tr>
+                        <tr><td>Salbutamol</td><td>Asthma attack, COPD</td><td>2.5mg/2.5ml</td></tr>
+                        <tr><td>Naloxone</td><td>Opioid overdose</td><td>400mcg/1ml</td></tr>
+                        <tr><td>Naproxen</td><td>Musculoskeletal pain</td><td>250mg</td></tr>
+                        <tr><td>Chlorphenamine</td><td>Mild/moderate allergic reaction</td><td>10mg/1ml</td></tr>
+                    </table>
+                </div>
+            </div></div>
+
+            <button class="accordion med-accordion">Paramedic</button>
+            <div class="panel"><div class="panel-inner">
+                <div class="table-responsive">
+                    <table class="medTable">
+                        <tr class="grade-header"><th>Medication</th><th>Indication</th><th>Form/Dose</th></tr>
+                        <tr><td>Adrenaline</td><td>Cardiac arrest, anaphylaxis</td><td>1mg/10ml (IV) / 0.5mg (IM)</td></tr>
+                        <tr><td>Amiodarone</td><td>Cardiac arrest (pulseless VT/VF)</td><td>300mg/10ml</td></tr>
+                        <tr><td>Atropine</td><td>Symptomatic bradycardia (&lt;40 pulse)</td><td>600 micrograms</td></tr>
+                        <tr><td>Diazepam</td><td>Acute muscle spasms, seizure control</td><td>5mg</td></tr>
+                        <tr><td>Ipratropium Bromide</td><td>Life-threatening asthma, COPD</td><td>250mcg/3ml</td></tr>
+                        <tr><td>Morphine Sulfate</td><td>Moderate to severe pain relief</td><td>10mg/1ml</td></tr>
+                        <tr><td>TXA</td><td>Major trauma, catastrophic bleeding</td><td>100mg/1ml</td></tr>
+                        <tr><td>Glucose (IV)</td><td>Hypoglycemia (unconscious)</td><td>10% or 50g/500ml</td></tr>
+                    </table>
+                </div>
+            </div></div>
+
+            <button class="accordion med-accordion">Advanced Paramedic</button>
+            <div class="panel"><div class="panel-inner">
+                <div class="table-responsive">
+                    <table class="medTable">
+                        <tr class="grade-header"><th>Medication</th><th>Indication</th><th>Form/Dose</th></tr>
+                        <tr><td>Ketamine</td><td>Severe pain management, sedation</td><td>10mg/1ml</td></tr>
+                        <tr><td>Midazolam</td><td>Status epilepticus (seizures), sedation</td><td>5mg/5ml</td></tr>
+                        <tr><td>Prednisolone</td><td>Moderate acute asthma, croup</td><td>5mg</td></tr>
+                    </table>
+                </div>
+            </div></div>
+
+            <button class="accordion med-accordion">HEMS / Doctor</button>
+            <div class="panel"><div class="panel-inner">
+                <div class="table-responsive">
+                    <table class="medTable">
+                        <tr class="grade-header"><th>Medication</th><th>Indication</th><th>Form/Dose</th></tr>
+                        <tr><td>Amoxicillin</td><td>Bacterial infections</td><td>500mg</td></tr>
+                        <tr><td>Codeine</td><td>Mild/severe pain (prescription)</td><td>15mg</td></tr>
+                        <tr><td>Blood Products</td><td>Massive haemorrhage, severe trauma</td><td>PRBCs / Plasma</td></tr>
+                        <tr><td>Surgical Airways</td><td>Cannot intubate / Cannot ventilate</td><td>Advanced intervention</td></tr>
+                    </table>
+                </div>
+            </div></div>
+
+            <button class="accordion">Disease Outbreak / Pharmacy Meds</button>
+            <div class="panel"><div class="panel-inner">
+                <div class="table-responsive">
+                    <table class="medTable">
+                        <tr class="grade-header"><th>Disease</th><th>Symptoms</th><th>Approved Meds</th></tr>
                         <tr><td>Cold</td><td>Sneezing, coughing</td><td>Tylacare, DayRelief, PainAway</td></tr>
                         <tr><td>Headache</td><td>Head pain, visual discomfort</td><td>Tylacare, Ibrofenix, PainAway</td></tr>
                         <tr><td>Flu</td><td>Coughing, fever, weakness</td><td>Flurimax, DayRelief, Ibrofenix, PainAway, Zithromed</td></tr>
@@ -419,38 +496,6 @@
                         <tr><td>Dizziness</td><td>Loss of balance, vertigo</td><td>Motionex, Meklirin, PainAway</td></tr>
                         <tr><td>DBI</td><td>Persistent coughing, fever, headache</td><td>Vironix, Ibrofenix, Tylacare, Zithromed, Vaxora, Doxallin</td></tr>
                         <tr><td>Fatigue</td><td>Extreme tiredness</td><td>Ibrofenix</td></tr>
-                    </table>
-                </div>
-            </div></div>
-
-            <button class="accordion">Standard Medications Search</button>
-            <div class="panel"><div class="panel-inner">
-                <input type="text" id="medSearch" onkeyup="searchMeds()" placeholder="Search medication or indication...">
-                <div class="table-responsive">
-                    <table id="medTable">
-                        <tr><th>Medication</th><th>Indication</th><th>Form/Dose</th></tr>
-                        <tr><td>Oxygen</td><td>Cardiac arrest, trauma, sepsis, shock</td><td>Gas</td></tr>
-                        <tr><td>Adrenaline</td><td>Cardiac arrest, anaphylaxis</td><td>1mg/10ml (IV) / 0.5mg (IM)</td></tr>
-                        <tr><td>Amiodarone</td><td>Cardiac arrest (pulseless VT)</td><td>300mg/10ml</td></tr>
-                        <tr><td>Amoxicillin</td><td>Infections</td><td>500mg</td></tr>
-                        <tr><td>Aspirin</td><td>Suspected MI / ACS</td><td>300mg</td></tr>
-                        <tr><td>Atropine</td><td>&lt;40 pulse symptomatic</td><td>600 micrograms</td></tr>
-                        <tr><td>Chlorphenamine</td><td>Allergic reaction</td><td>10mg/1ml</td></tr>
-                        <tr><td>Codeine</td><td>Mild/severe pain</td><td>15mg</td></tr>
-                        <tr><td>Diazepam</td><td>Acute muscle spasms</td><td>5mg</td></tr>
-                        <tr><td>Glucose</td><td>Hypoglycemia</td><td>50g/500ml</td></tr>
-                        <tr><td>GTN</td><td>Cardiac chest pain, angina</td><td>400mcg/spray</td></tr>
-                        <tr><td>Ibuprofen</td><td>Mild/moderate pain</td><td>400mg</td></tr>
-                        <tr><td>Ipratropium Bromide</td><td>Life-threatening asthma, COPD</td><td>250mcg/3ml</td></tr>
-                        <tr><td>Ketamine</td><td>Severe pain management</td><td>10mg/1ml</td></tr>
-                        <tr><td>Midazolam</td><td>Seizure control</td><td>5mg/5ml</td></tr>
-                        <tr><td>Morphine Sulfate</td><td>Moderate pain relief</td><td>10mg/1ml</td></tr>
-                        <tr><td>Naloxone</td><td>Opioid overdose</td><td>400mcg/1ml</td></tr>
-                        <tr><td>Naproxen</td><td>Musculoskeletal pain</td><td>250mg</td></tr>
-                        <tr><td>Paracetamol</td><td>Mild/moderate pain</td><td>1g (1000mg)</td></tr>
-                        <tr><td>Prednisolone</td><td>Moderate acute asthma</td><td>5mg</td></tr>
-                        <tr><td>Salbutamol</td><td>Asthma attack, COPD</td><td>2.5mg/2.5ml</td></tr>
-                        <tr><td>TXA</td><td>Major trauma, blood control</td><td>100mg/1ml</td></tr>
                     </table>
                 </div>
             </div></div>
@@ -570,31 +615,45 @@
             });
         }
 
-        // Medication Search filter
+        // Global Medication Search filter (searches across all grade tables)
         function searchMeds() {
-            let input = document.getElementById("medSearch");
-            let filter = input.value.toUpperCase();
-            let table = document.getElementById("medTable");
-            let tr = table.getElementsByTagName("tr");
+            let input = document.getElementById("medSearch").value.toUpperCase();
+            let tables = document.querySelectorAll(".medTable");
 
-            for (let i = 1; i < tr.length; i++) {
-                tr[i].style.display = "none"; 
-                let td = tr[i].getElementsByTagName("td");
-                for (let j = 0; j < td.length; j++) {
-                    if (td[j]) {
-                        let txtValue = td[j].textContent || td[j].innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = ""; 
-                            break; 
+            tables.forEach(table => {
+                let tr = table.getElementsByTagName("tr");
+                let hasVisibleRow = false;
+                
+                // Start from i=1 to skip the header row
+                for (let i = 1; i < tr.length; i++) {
+                    tr[i].style.display = "none"; 
+                    let td = tr[i].getElementsByTagName("td");
+                    for (let j = 0; j < td.length; j++) {
+                        if (td[j]) {
+                            let txtValue = td[j].textContent || td[j].innerText;
+                            if (txtValue.toUpperCase().indexOf(input) > -1) {
+                                tr[i].style.display = ""; 
+                                hasVisibleRow = true;
+                                break; 
+                            }
                         }
                     }
                 }
-            }
-            // Dynamically adjust accordion height when filtering
-            let panel = table.closest('.panel');
-            if(panel && panel.style.maxHeight) {
-                panel.style.maxHeight = panel.scrollHeight + "px";
-            }
+
+                // If searching and a match is found in a hidden accordion, auto-expand it
+                let panel = table.closest('.panel');
+                let accordionBtn = panel.previousElementSibling;
+                
+                if (input !== "") {
+                    if (hasVisibleRow) {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                        accordionBtn.classList.add("active-acc");
+                    } else {
+                        panel.style.maxHeight = null;
+                        accordionBtn.classList.remove("active-acc");
+                    }
+                }
+            });
         }
     </script>
 </body>
