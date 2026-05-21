@@ -138,6 +138,29 @@
         tr:hover td { background-color: var(--bg); }
         .grade-header th { background-color: #374151; }
 
+        /* Download Button */
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--secondary);
+            color: white;
+            padding: 14px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            box-shadow: 0 4px 12px rgba(0, 150, 57, 0.2);
+            transition: var(--transition);
+        }
+
+        .download-btn:active {
+            transform: scale(0.96);
+        }
+
         /* Mobile App Navigation Bar */
         .nav-bar {
             position: fixed;
@@ -244,6 +267,7 @@
 
     <div class="container">
 
+        <!-- POLICIES TAB -->
         <div id="policies" class="tab-content active">
             <h2>Operational Standard v2.0</h2>
             
@@ -369,9 +393,15 @@
                 <p>Post in the LOA Request channel. Must include: Start Date, End Date, Reason.</p>
                 <h3>Complaints</h3>
                 <p>All complaints are confidential. File via the UHS Internal Complaints Form.</p>
+
+                <!-- NEW DOWNLOAD BUTTON HERE -->
+                <a href="student_touchportal.tpz2" download class="download-btn">
+                    <span style="font-size: 1.2rem;">💾</span> Download Student Touchportal
+                </a>
             </div></div>
         </div>
 
+        <!-- CLINICAL TAB -->
         <div id="clinical" class="tab-content">
             <h2>Clinical Procedures</h2>
             <button class="accordion">Primary Survey (CABCDE)</button>
@@ -424,6 +454,7 @@
             </div></div>
         </div>
 
+        <!-- VITALS TAB -->
         <div id="vitals" class="tab-content">
             <h2>Vitals & Assessment</h2>
             <button class="accordion">Vital Sign Ranges</button>
@@ -457,6 +488,7 @@
             </div></div>
         </div>
 
+        <!-- MEDS TAB -->
         <div id="meds" class="tab-content">
             <div class="search-container">
                 <input type="text" id="medSearch" onkeyup="searchMeds()" placeholder="🔍 Search medication or symptom...">
@@ -610,6 +642,7 @@
             </div></div>
         </div>
 
+        <!-- DRIVING TAB -->
         <div id="driving" class="tab-content">
             <h2>Driving & Comms</h2>
             <button class="accordion">State Codes & Comms</button>
@@ -679,6 +712,7 @@
             </div></div>
         </div>
 
+        <!-- TREATMENT MECHANICS TAB -->
         <div id="mechanics" class="tab-content">
             <h2>Treatment Mechanics</h2>
             
@@ -705,6 +739,7 @@
 
     </div>
 
+    <!-- Bottom Navigation Bar -->
     <nav class="nav-bar">
         <button class="nav-btn active" onclick="openTab('policies', this)">
             <span class="icon">📄</span> Policies
