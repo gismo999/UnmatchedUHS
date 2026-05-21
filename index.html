@@ -146,16 +146,19 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
             z-index: 100;
             padding: 8px 10px;
             padding-bottom: calc(8px + env(safe-area-inset-bottom)); /* iPhone X+ safe area */
             border-top: 1px solid var(--border-color);
+            overflow-x: auto; /* Allow scrolling for multiple tabs */
+            gap: 5px;
         }
 
         .nav-btn {
-            flex: 1;
+            flex: 1 0 auto; /* Prevent shrinking so buttons stay tappable */
+            min-width: 75px;
             background: none;
             border: none;
             border-radius: 12px;
@@ -229,7 +232,7 @@
 
         ul, ol { margin-top: 5px; padding-left: 20px; }
         li { margin-bottom: 6px; }
-        code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; color: var(--danger);}
+        code { background: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-size: 1em; color: var(--danger); font-weight: bold;}
 
     </style>
 </head>
@@ -345,18 +348,6 @@
                     <li>1x Flashlight, 1x Prescription Pad</li>
                     <li>1x UHS Key Card</li>
                     <li>1x Axon Body Camera & 1x Cleaning Kit</li>
-                </ul>
-            </div></div>
-
-            <button class="accordion">Roleplay Mechanics</button>
-            <div class="panel"><div class="panel-inner">
-                <h3>Treating Animations</h3>
-                <p><strong>Standing (Bed/Window):</strong> Use <code>/e mechanic</code></p>
-                <p><strong>Floor Level (Car/Ground):</strong> Use <code>/e mechanic 4</code></p>
-                <h3>Uniform Configurations</h3>
-                <ul>
-                    <li><strong>Bag:</strong> Item 119 (Unisex)</li>
-                    <li><strong>Stabvests/Helmets:</strong> ONLY to be used during scenes where weapons or dangerous situations are present.</li>
                 </ul>
             </div></div>
 
@@ -688,6 +679,30 @@
             </div></div>
         </div>
 
+        <div id="mechanics" class="tab-content">
+            <h2>Treatment Mechanics</h2>
+            
+            <button class="accordion">Standing & Bed Height</button>
+            <div class="panel"><div class="panel-inner">
+                <p>When treating someone at bed height or through a car window, use the following command to ensure the animation looks correct to everyone else in the scene:</p>
+                <code>/e mechanic</code>
+            </div></div>
+
+            <button class="accordion">Floor Level & Overturned Car</button>
+            <div class="panel"><div class="panel-inner">
+                <p>When treating someone at floor level or near an overturned car, use the following command to ensure the animation looks correct to everyone else in the scene:</p>
+                <code>/e mechanic 4</code>
+            </div></div>
+            
+            <button class="accordion">Uniform Configurations</button>
+            <div class="panel"><div class="panel-inner">
+                <ul>
+                    <li><strong>Bag:</strong> Item 119 (Unisex)</li>
+                    <li><strong>Stabvests/Helmets:</strong> ONLY to be used during scenes where weapons or dangerous situations are present.</li>
+                </ul>
+            </div></div>
+        </div>
+
     </div>
 
     <nav class="nav-bar">
@@ -705,6 +720,9 @@
         </button>
         <button class="nav-btn" onclick="openTab('driving', this)">
             <span class="icon">🚨</span> BlueLights
+        </button>
+        <button class="nav-btn" onclick="openTab('mechanics', this)">
+            <span class="icon">🛠️</span> Mechanics
         </button>
     </nav>
 
